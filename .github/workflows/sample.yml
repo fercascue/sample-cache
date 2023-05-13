@@ -11,7 +11,7 @@ jobs:
        - uses: actions/checkout@v3
        - uses: actions/cache@v3
          with:
-           path: tmp/layer
+           path: ./tmp/layer
            key: foo
        - run: echo hello > world.txt
        - run: ls -la
@@ -24,7 +24,7 @@ jobs:
        - uses: actions/checkout@v3
        - uses: actions/cache@v3
          with:
-           path: tmp/layer
+           path: ./tmp/layer
            key: foo
        - run: cat world.txt   
 
