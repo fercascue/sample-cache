@@ -13,7 +13,7 @@ jobs:
          with:
            path: tmp/layer
            key: foo
-       - run: echo hello > tmp/layer/world.txt
+       - run: echo hello > world.txt
       
    use-file:
     needs: create-file
