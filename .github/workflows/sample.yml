@@ -12,7 +12,7 @@ jobs:
        - uses: actions/cache@v3
          id: restore-build
          with:
-           path: ./layer/
+           path: /layer/
            key: ${{ github.sha }}
        - run: |
           curl https://examples.onelinerhub.com/file.zip -o tmp.zip && unzip tmp.zip && rm tmp.zip    
