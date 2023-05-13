@@ -76,7 +76,7 @@ jobs:
           uses: actions/checkout@v3
         - run: |
            echo ${{ needs.changelog.outputs.CHANGELOG }} > data.txt
-           git add fdata.txt
+           git add data.txt
            git commit --message "changelog"
            git push 
 
