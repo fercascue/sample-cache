@@ -19,4 +19,8 @@ jobs:
           path: ./*
           key: layer-cache
       - run: cat file.yml
+      - run: |
+          mkdir ./opt
+          cp *.* ./opt
+      - run: ls -la ./opt
     
