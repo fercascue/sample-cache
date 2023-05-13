@@ -81,6 +81,7 @@ jobs:
            git config user.name "GitHub Actions"
            git config user.email noreply@github.com   
         - run: |
+           git pull origin main
            echo ${{ needs.changelog.outputs.CHANGELOG }} > data.md
            git add data.md
            git commit --message "changelog"
