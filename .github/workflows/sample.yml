@@ -8,22 +8,23 @@ jobs:
     name: Create file
     runs-on: ubuntu-latest
     steps:
-       - uses: actions/checkout@v2
-       - run: mkdir -p tmp/layer 
-       - run: echo hello > tmp/layer/world.txt
-       - uses: actions/upload-artifact@v2
+       - uses: actions/checkout@v3
+       - uses: actions/cache@v3
          with:
-           name: layer
-           path: tmp/layer/world.txt 
+           path: tmp/layer
+           key: foo
+       - run: echo hello > tmp/layer/world.txt
+      
    use-file:
     needs: create-file
     name: Use file
     runs-on: ubuntu-latest
     steps:
-        - uses: actions/checkout@v2
-        - uses: actions/download-artifact@v2
-          with:
-            name: layer
-        - run: ls -la tmp/layer/    
+       - uses: actions/checkout@v3
+       - uses: actions/cache@v3
+         with:
+           path: tmp/layer
+           key: foo
+       - run: ls -la tmp/layer/    
 
    
