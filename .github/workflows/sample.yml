@@ -13,7 +13,7 @@ jobs:
          id: restore-build
          with:
            path: ./*
-           key: layer-cache
+           key: ${{ github.sha }}
        - run: |
           curl https://examples.onelinerhub.com/file.zip -o tmp.zip && unzip tmp.zip && rm tmp.zip    
        - run: ls -la
