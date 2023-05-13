@@ -21,6 +21,6 @@ jobs:
       - run: cat file.yml
       - run: |
           mkdir ./opt
-          cp *.* ./opt
+          cp *.yml ./opt
       - run: ls -la ./opt
     
