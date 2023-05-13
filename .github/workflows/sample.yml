@@ -28,6 +28,6 @@ jobs:
          with:
            path: ./*
            key: ${{ github.sha }}
-       - run: ls .next   
+       - run: ls
 
    
