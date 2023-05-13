@@ -1,0 +1,22 @@
+name: Dispatcher workflow suite
+
+on:
+  workflow_call:
+    inputs:
+      resource:  
+        required: false
+        type: string
+
+jobs:
+  use-file:
+    name: Use file
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/cache@v3
+        id: restore-build
+        with:
+          path: ./*
+          key: ${{ github.sha }}
+      - run: ls
+      - run: cat world.txt

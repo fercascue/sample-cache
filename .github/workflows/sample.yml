@@ -4,7 +4,7 @@ on:
       branches:
         - main
 jobs:
-   create-file:
+  create-file:
     name: Create file
     runs-on: ubuntu-latest
     steps:
@@ -17,18 +17,9 @@ jobs:
        - run: echo hello > world.txt
        - run: ls -la
       
-   use-file:
+  call-workflow:
+    name: call workflow
     needs: create-file
-    name: Use file
-    runs-on: ubuntu-latest
-    steps:
-       - uses: actions/checkout@v3
-       - uses: actions/cache@v3
-         id: restore-build
-         with:
-           path: ./*
-           key: ${{ github.sha }}
-       - run: ls
-       - run: cat world.txt
-
+    uses: ./.github/workflows/reusable-workflow.yml
+    
    
