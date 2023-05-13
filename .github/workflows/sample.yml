@@ -16,6 +16,7 @@ jobs:
            name: layer
            path: tmp/layer/world.txt 
    use-file:
+    needs: create-file
     name: Use file
     runs-on: ubuntu-latest
     steps:
