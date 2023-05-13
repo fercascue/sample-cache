@@ -65,6 +65,7 @@ jobs:
            changelog=$(git log --oneline --no-decorate)
            echo $changelog
            changelog="${changelog//'%'/'%25'}"
+           changelog="${changelog//$'\n'/'%' - }"
            changelog=" - ${changelog//$'\r'/'%0D'}"
            echo "CHANGELOG=$changelog" >>$GITHUB_OUTPUT
         - name: Create Release
