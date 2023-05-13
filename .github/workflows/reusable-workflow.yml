@@ -18,5 +18,5 @@ jobs:
         with:
           path: /layer/
           key: ${{ github.sha }}
-      - run: ls -la
+      - run: cat file.yml
     
