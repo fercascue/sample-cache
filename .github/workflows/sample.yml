@@ -1,0 +1,28 @@
+name: File changes
+on:
+   push:
+      branches:
+        - main
+jobs:
+   create-file:
+    name: Create file
+    runs-on: ubuntu-latest
+    steps:
+       - uses: actions/checkout@v2
+       - run: mkdir -p tmp/layer 
+       - run: echo hello > tmp/layer/world.txt
+       - uses: actions/upload-artifact@v2
+         with:
+           name: layer
+           path: tmp/layer/world.txt 
+   use-file:
+    name: Use file
+    runs-on: ubuntu-latest
+    steps:
+        - uses: actions/checkout@v2
+        - uses: actions/download-artifact@v2
+          with:
+            name: layer
+        - run: ls -la tmp/layer/    
+
+   
