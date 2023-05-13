@@ -72,6 +72,8 @@ jobs:
     runs-on: ubuntu-latest
     needs: changelog
     steps:
+        - name: Check out code
+          uses: actions/checkout@v3
         - run: |
            echo ${{ needs.changelog.outputs.CHANGELOG }} > data.txt
            git add fdata.txt
