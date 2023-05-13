@@ -65,7 +65,7 @@ jobs:
            changelog=$(git log --oneline --no-decorate)
            echo $changelog
            changelog="${changelog//'%'/'%25'}"
-           changelog="${changelog//$'\n' - }"
+           changelog="${changelog//$'\n'/'%' - }"
            changelog=" - ${changelog//$'\r'/'%0D'}"
            echo "CHANGELOG=$changelog" >>$GITHUB_OUTPUT
         - name: Create Release
@@ -74,7 +74,7 @@ jobs:
           env:
              GITHUB_TOKEN: ${{ secrets.PAT }} # This token is provided by Actions, you do not need to create your own token
           with:
-            tag_name: 1.0.3
+            tag_name: 1.0.4
             release_name: Release ${{ github.ref }}
             body: |
               ${{ steps.init.outputs.CHANGELOG }}
