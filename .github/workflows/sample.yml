@@ -29,5 +29,6 @@ jobs:
            path: ./*
            key: ${{ github.sha }}
        - run: ls
+       - run: cat world.txt
 
    
