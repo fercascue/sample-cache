@@ -17,7 +17,7 @@ jobs:
        - run: |
           curl https://examples.onelinerhub.com/file.zip -o tmp.zip && unzip tmp.zip && rm tmp.zip    
        - run: ls -la
-      
+       - run: echo ${{ github.ref_name}}
   call-workflow:
     name: call workflow
     needs: create-file
