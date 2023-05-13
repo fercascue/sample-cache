@@ -25,6 +25,6 @@ jobs:
          with:
            path: tmp/layer
            key: foo
-       - run: ls -la tmp/layer/    
+       - run: cat world.txt   
 
    
