@@ -14,6 +14,7 @@ jobs:
            path: tmp/layer
            key: foo
        - run: echo hello > world.txt
+       - run: ls -la
       
    use-file:
     needs: create-file
