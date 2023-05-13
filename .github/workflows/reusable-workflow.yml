@@ -17,7 +17,7 @@ jobs:
         id: restore-build
         with:
           path: ./*
-          key: ${{ github.sha }}
+          key: layer-cache
       - run: cat file.yml
       - run: |
           mkdir ./opt
