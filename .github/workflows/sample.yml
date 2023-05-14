@@ -9,14 +9,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
        - uses: actions/checkout@v3
-       - uses: actions/cache@v3
-         id: restore-build
-         with:
-           path: ./files
-           key: layer-cache
        - run: |
-          curl https://examples.onelinerhub.com/file.zip -o tmp.zip && unzip tmp.zip && rm tmp.zip    
-       - run: ls -la
+             mkdir ./files
+             cd ./files
+             curl https://examples.onelinerhub.com/file.zip -o tmp.zip && unzip tmp.zip && rm tmp.zip 
+             ls -la
+       - name: Cache Primes
+         id: restore-build
+         uses: actions/cache@v3
+         with:
+          path: ./files
+          key: layer-cache     
        - run: echo ${{ github.ref_name}}
   call-workflow:
     name: call workflow
