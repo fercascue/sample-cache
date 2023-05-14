@@ -18,7 +18,7 @@ jobs:
         with:
           path: ./files
           key: layer-cache
-      - run: ls .la
+      - run: ls -la
       - run: |
           mkdir ./opt
           cp *.yml ./opt
