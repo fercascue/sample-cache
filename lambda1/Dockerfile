@@ -1,5 +1,10 @@
-#add something
-FROM openjdk:11
+#Stage for maven compile
+FROM public.ecr.aws/lambda/java:11
 
-COPY target/lambda1-0.0.1-SNAPSHOT.jar app.jar
-ENTRYPOINT ["java","-jar","/app.jar"]
+COPY opt/lib /var/task/lib
+RUN ls -la /var/task/lib
+
+
+
+# Command to run into the CMD for landa execution.
+CMD ["es.totalenergies.customersportal.handler.App::handleRequest"]
