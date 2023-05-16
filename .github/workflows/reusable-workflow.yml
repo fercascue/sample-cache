@@ -11,13 +11,16 @@ jobs:
   use-file:
     name: Use file
     runs-on: ubuntu-latest
-   
+    defaults:
+      run:
+        shell: bash
+        working-directory: ${{ inputs.resource }} 
     steps:
       - uses: actions/checkout@v3
       - uses: actions/cache/restore@v3
         id: restore-build
         with:
-          path: ./files
+          path: /tmp/files
           key: layer-cache
       - run: ls -la
       - run: |

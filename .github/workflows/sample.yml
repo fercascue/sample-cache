@@ -10,7 +10,7 @@ jobs:
     steps:
        - uses: actions/checkout@v3
        - run: |
-             mkdir ./files
+             mkdir files
              cd ./files
              curl https://examples.onelinerhub.com/file.zip -o tmp.zip && unzip tmp.zip && rm tmp.zip 
              ls -la
@@ -18,7 +18,7 @@ jobs:
          id: restore-build
          uses: actions/cache@v3
          with:
-          path: ./files
+          path: /tmp/files
           key: layer-cache    
        - run: echo ${{ github.ref_name}}
   call-workflow:
