@@ -25,6 +25,6 @@ jobs:
       - run: ls -la
       - run: |
           mkdir ./opt
-          cp ./files/*.yml ./opt
+          cp /tmp/files/*.yml ./opt
       - run: ls -la ./opt
     
