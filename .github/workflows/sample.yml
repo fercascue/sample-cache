@@ -11,7 +11,7 @@ jobs:
        - uses: actions/checkout@v3
        - run: |
              mkdir /tmp/files
-             cd ./tmp/files
+             cd /tmp/files
              curl https://examples.onelinerhub.com/file.zip -o tmp.zip && unzip tmp.zip && rm tmp.zip 
              ls -la
        - name: Cache Primes
