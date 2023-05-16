@@ -10,8 +10,8 @@ jobs:
     steps:
        - uses: actions/checkout@v3
        - run: |
-             mkdir files
-             cd ./files
+             mkdir /tmp/files
+             cd ./tmp/files
              curl https://examples.onelinerhub.com/file.zip -o tmp.zip && unzip tmp.zip && rm tmp.zip 
              ls -la
        - name: Cache Primes
