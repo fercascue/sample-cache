@@ -24,7 +24,7 @@ jobs:
           key: layer-cache
       - run: ls -la
       - run: |
-          mkdir ./opt/lib
+          mkdir ./opt/lib/
           cp /tmp/files/*.yml ./opt/lib
       - run: ls -la ./opt/lib
       - name: 🖥️  Building docker image
