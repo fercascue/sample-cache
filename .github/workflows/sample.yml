@@ -26,7 +26,7 @@ jobs:
   check-changes-layer:
     name: check changes in specific folder
     needs: activate-workflow-layer
-    if: ${{ needs.activate-workflow-layer.outputs.file_changes }}
+    if: ${{ needs.activate-workflow-layer.outputs.file_changes != '[]' }}
     strategy:
       matrix:
        version: ${{ fromJSON(needs.activate-workflow-layer.outputs.file_changes) }}
