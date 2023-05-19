@@ -8,6 +8,5 @@ COPY target /var/task/lib
 RUN ls -la /var/task/lib
 RUN ls -la /var/task
 
-
 # Command to run into the CMD for landa execution.
 CMD ["es.totalenergies.customersportal.handler.App::handleRequest"]
