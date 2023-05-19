@@ -26,9 +26,7 @@ jobs:
     name: check changes in specific folder
     needs: activate-workflow
     if: |
-       ${{ needs.activate-workflow.outputs.file_changes }}
-       && always() && 
-       (needs.activate-workflow.result == 'success' || needs.activate-workflow.result == 'skipped')
+      always()
     strategy:
       matrix:
        version: ${{ fromJSON(needs.activate-workflow.outputs.file_changes) }}
