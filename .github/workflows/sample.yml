@@ -60,9 +60,7 @@ jobs:
     name: Download layer to cache
     runs-on: ubuntu-latest
     needs: activate-workflow-lambda
-    if: |
-       always() &&
-       ${{ needs.activate-workflow-lambda.outputs.lambda_changes != '[]' }}
+    if: ${{ needs.activate-workflow-lambda.outputs.lambda_changes != '[]' }}
     steps:
        - uses: actions/checkout@v3
        - run: echo  ${{ needs.activate-workflow-lambda.outputs.lambda_changes == '[]'}}
