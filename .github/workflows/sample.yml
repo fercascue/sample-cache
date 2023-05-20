@@ -197,7 +197,7 @@ jobs:
     steps:
       - name: Generate list using Markdown
         run: |
-          echo "Value ${{ needs.activate-workflow-layer.outputs.LAYER_COUNT }}- "${{ env.LAYER_GLOBAL }}""
+          echo "Value ${{ needs.activate-workflow-layer.outputs.LAYER_COUNT }}- ${{ env.LAYER_GLOBAL }}"
           echo '### Deployment complete! :rocket: ' >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY # this is a blank line
           echo "- Number of layer deployed" >> $GITHUB_STEP_SUMMARY
