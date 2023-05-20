@@ -17,6 +17,7 @@ jobs:
         shell: bash
         working-directory: ${{ inputs.resource }} 
     steps:
+     - uses: actions/checkout@v3 
      - run: echo deploy layer to AWS
   deploy-lambda:
     name: Deploy lambda using cache
