@@ -31,7 +31,7 @@ jobs:
               ((i=i+1))
            done 
            echo i: $i
-           echo "LAYER_COUNT=$(i)" >> $GITHUB_OUTPUT
+           echo "LAYER_COUNT=$i" >> $GITHUB_OUTPUT
            echo ${{ steps.changed-files-dir-names.outputs.all_changed_files }}
   activate-workflow-lambda:
     name: Detect lambda changes
