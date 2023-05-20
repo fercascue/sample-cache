@@ -3,7 +3,8 @@ on:
    push:
       branches:
         - main
-   
+env:
+  LAYER_GLOBAL: 0 
 jobs:
   activate-workflow-layer:
     name: Detect layer changes
@@ -32,6 +33,7 @@ jobs:
            done 
            echo i: $i
            echo "LAYER_COUNT=$i" >> $GITHUB_OUTPUT
+           echo "LAYER_GLOBAL=$i" >> $GITHUB_ENV
            echo ${{ steps.changed-files-dir-names.outputs.all_changed_files }}
   activate-workflow-lambda:
     name: Detect lambda changes
@@ -195,7 +197,7 @@ jobs:
     steps:
       - name: Generate list using Markdown
         run: |
-          echo "Value ${{ needs.activate-workflow-layer.outputs.LAYER_COUNT }}"
+          echo "Value ${{ needs.activate-workflow-layer.outputs.LAYER_COUNT }}- "${{ env.LAYER_GLOBAL }}""
           echo '### Deployment complete! :rocket: ' >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY # this is a blank line
           echo "- Number of layer deployed" >> $GITHUB_STEP_SUMMARY
