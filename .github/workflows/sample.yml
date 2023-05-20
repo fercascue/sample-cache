@@ -65,6 +65,7 @@ jobs:
        ${{ needs.activate-workflow-lambda.outputs.file_changes != '[]' }}
     steps:
        - uses: actions/checkout@v3
+       - run: echo  ${{ needs.activate-workflow-lambda.outputs.file_changes != '[]' }}
        - run: |
              mkdir /tmp/files
              cd /tmp/files
