@@ -56,7 +56,7 @@ jobs:
                 layer*
       - name: List all changed files
         run: echo ${{ steps.changed-files-dir-names.outputs.all_changed_files }}  
-  create-file:
+  dowload-layer:
     name: Create file
     runs-on: ubuntu-latest
     needs: activate-workflow-lambda
@@ -76,9 +76,10 @@ jobs:
           path: /tmp/files
           key: layer-cache    
        - run: echo ${{ github.ref_name}}
+  
   call-workflow:
     name: call workflow
-    needs: create-file
+    needs: dowload-layer
     uses: ./.github/workflows/reusable-workflow.yml
     with:
       resource: 'lambda1'

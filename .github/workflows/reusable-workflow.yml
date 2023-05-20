@@ -8,9 +8,20 @@ on:
         type: string
 
 jobs:
-  use-file:
-    name: Use file
+  deploy-layer:
+    name: Deploy lambda using cache
     runs-on: ubuntu-latest
+    if: ${{ contains(inputs.resource, 'layer') == 'false' }}
+    defaults:
+      run:
+        shell: bash
+        working-directory: ${{ inputs.resource }} 
+    steps:
+     - run: echo deploy layer to AWS
+  deploy-lambda:
+    name: Deploy lambda using cache
+    runs-on: ubuntu-latest
+    if: ${{ contains(inputs.resource, 'layer') == 'false' }}
     defaults:
       run:
         shell: bash
