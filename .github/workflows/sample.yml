@@ -57,11 +57,12 @@ jobs:
       - name: List all changed files
         run: echo ${{ steps.changed-files-dir-names.outputs.all_changed_files }}  
   dowload-layer:
-    name: Create file
+    name: Download layer to cache
     runs-on: ubuntu-latest
     needs: activate-workflow-lambda
     if: |
-       always() 
+       always() &&
+       ${{ needs.activate-workflow-lambda.outputs.file_changes != '[]' }}
     steps:
        - uses: actions/checkout@v3
        - run: |
@@ -78,8 +79,11 @@ jobs:
        - run: echo ${{ github.ref_name}}
   
   call-workflow:
-    name: call workflow
-    needs: dowload-layer
+    name: call workflow for lambda
+    needs: [dowload-layer, activate-workflow-lambda]
+    if: |
+       always() &&
+       ${{ needs.activate-workflow-lambda.outputs.file_changes != '[]' }}
     uses: ./.github/workflows/reusable-workflow.yml
     with:
       resource: 'lambda1'
