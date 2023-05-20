@@ -19,9 +19,8 @@ jobs:
           json: true
           base_sha: ${{ github.base_ref }}
           json_raw_format: true
-          files_ignore: |
-                   .github
-                   layer*
+          files_ignore: .github
+          files: layer*         
       - name: List all changed files
         run: echo ${{ steps.changed-files-dir-names.outputs.all_changed_files }}
   check-changes-layer:
