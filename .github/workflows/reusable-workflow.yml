@@ -22,7 +22,7 @@ jobs:
   deploy-lambda:
     name: Deploy lambda using cache
     runs-on: ubuntu-latest
-    if: ${{ contains(inputs.resource, 'layer') == 'false' }}
+    if: ${{ contains(inputs.resource, 'layer') == false }}
     defaults:
       run:
         shell: bash
