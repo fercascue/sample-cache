@@ -24,6 +24,7 @@ jobs:
       - name: List all changed files
         run: echo ${{ steps.changed-files-dir-names.outputs.all_changed_files }}
   activate-workflow-lambda:
+    name: Detect lambda changes
     runs-on: ubuntu-latest
     outputs:
       lambda_changes: ${{ steps.changed-files-dir-names.outputs.all_changed_files }}
