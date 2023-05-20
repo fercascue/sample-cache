@@ -3,6 +3,8 @@ on:
    push:
       branches:
         - main
+env:
+   layer-changes: 0        
 jobs:
   activate-workflow-layer:
     name: Detect layer changes
@@ -22,7 +24,13 @@ jobs:
           files_ignore: .github
           files: layer*         
       - name: List all changed files
-        run: echo ${{ steps.changed-files-dir-names.outputs.all_changed_files }}
+        run: |
+           i=0
+           for file in ${{ steps.changed-files-dir-names.outputs.all_changed_files }}; do
+              ((i=i+1))
+           done 
+           echo i: $i
+           echo ${{ steps.changed-files-dir-names.outputs.all_changed_files }}
   activate-workflow-lambda:
     name: Detect lambda changes
     runs-on: ubuntu-latest
@@ -185,7 +193,7 @@ jobs:
     steps:
       - name: Generate list using Markdown
         run: |
-          echo '### Deployment complete! ' >> $GITHUB_STEP_SUMMARY
+          echo '### Deployment complete! :rocket: ' >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY # this is a blank line
           echo "- Number of layer deployed" >> $GITHUB_STEP_SUMMARY
           echo "- Number of lambda deployed" >> $GITHUB_STEP_SUMMARY
