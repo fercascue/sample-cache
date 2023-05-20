@@ -77,4 +77,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: echo ${{ needs.check-all-changes.outputs.deploy_flow}}
+  run-layer-flow:
+    name: Run layer flow
+    needs: [check-all-changes, activate-workflow-layer]
+    if: ${{ needs.check-all-changes.outputs.deploy_flow == 'layer' }}
+    strategy:
+      matrix:
+       version: ${{ fromJSON(needs.activate-workflow-layer.outputs.layer_changes) }}
+    uses: ./.github/workflows/reusable-workflow.yml
+    with:
+      resource: ${{ (matrix.version) }}  
+
      
