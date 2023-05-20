@@ -48,7 +48,7 @@ jobs:
     needs: [activate-workflow-layer, activate-workflow-lambda]
     runs-on: ubuntu-latest
     outputs:
-      deploy_flow: ${{ steps.changed-files-dir-names.outputs.all_changed_files }}
+      deploy_flow: ${{ steps.changed-files-dir-names.outputs.deploy_flow }}
     steps:
       - name: Check if changes in layer or lambda
         id: changed-files-dir-names
@@ -71,7 +71,7 @@ jobs:
           fi
         shell: bash 
   validate-flow:
-    name: check changes in specific folder
+    name: Validate flow
     needs: check-all-changes
     runs-on: ubuntu-latest
     steps:
