@@ -9,9 +9,9 @@ on:
 
 jobs:
   deploy-layer:
-    name: Deploy lambda using cache
+    name: Deploy layer using cache
     runs-on: ubuntu-latest
-    if: ${{ contains(inputs.resource, 'layer') == 'false' }}
+    if: ${{ contains(inputs.resource, 'layer') }}
     defaults:
       run:
         shell: bash
