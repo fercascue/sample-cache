@@ -40,7 +40,7 @@ jobs:
        always() && 
        (needs.check-changes-layer.result == 'success' || needs.check-changes-layer.result == 'skipped') 
     outputs:
-        file_changes: ${{ steps.changed-files-dir-names.outputs.all_changed_files }}
+        lambda_changes: ${{ steps.changed-files-dir-names.outputs.all_changed_files }}
     steps: 
       - uses: actions/checkout@v3   
       - name: Run changed-files with dir_names
@@ -62,10 +62,10 @@ jobs:
     needs: activate-workflow-lambda
     if: |
        always() &&
-       ${{ needs.activate-workflow-lambda.outputs.file_changes != '[]' }}
+       ${{ needs.activate-workflow-lambda.outputs.lambda_changes != '[]' }}
     steps:
        - uses: actions/checkout@v3
-       - run: echo  ${{ needs.activate-workflow-lambda.outputs.file_changes != '[]' }}
+       - run: echo  ${{ needs.activate-workflow-lambda.outputs.lambda_changes != '[]' }}
        - run: |
              mkdir /tmp/files
              cd /tmp/files
@@ -84,7 +84,7 @@ jobs:
     needs: [dowload-layer, activate-workflow-lambda]
     if: |
        always() &&
-       ${{ needs.activate-workflow-lambda.outputs.file_changes != '[]' }}
+       ${{ needs.activate-workflow-lambda.outputs.lambda_changes != '[]' }}
     uses: ./.github/workflows/reusable-workflow.yml
     with:
       resource: 'lambda1'
