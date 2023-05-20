@@ -36,9 +36,6 @@ jobs:
   activate-workflow-lambda:
     runs-on: ubuntu-latest
     needs: check-changes-layer
-    if: |
-       always() && 
-       (needs.check-changes-layer.result == 'success' || needs.check-changes-layer.result == 'skipped') 
     outputs:
         lambda_changes: ${{ steps.changed-files-dir-names.outputs.all_changed_files }}
     steps: 
