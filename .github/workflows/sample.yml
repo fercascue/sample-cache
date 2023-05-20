@@ -62,7 +62,7 @@ jobs:
     needs: activate-workflow-lambda
     if: |
        always() &&
-       (needs.activate-workflow-lambda.result != 'skipped')
+       ${{ needs.activate-workflow-lambda.outputs.file_changes != '[]' }}
     steps:
        - uses: actions/checkout@v3
        - run: |
