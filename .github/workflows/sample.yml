@@ -5,12 +5,13 @@ on:
         - main
 jobs:
   activate-workflow-layer:
+    name: Detect layer changes
     runs-on: ubuntu-latest
     outputs:
         file_changes: ${{ steps.changed-files-dir-names.outputs.all_changed_files }}
     steps: 
       - uses: actions/checkout@v3   
-      - name: Run changed-files with dir_names
+      - name: Run changed-files with dir_names for layers
         id: changed-files-dir-names
         uses: tj-actions/changed-files@v35
         with:
@@ -20,7 +21,7 @@ jobs:
           json_raw_format: true
           files_ignore: |
                    .github
-                   lambda1
+                   layer*
       - name: List all changed files
         run: echo ${{ steps.changed-files-dir-names.outputs.all_changed_files }}
   check-changes-layer:
@@ -37,6 +38,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: check-changes-layer
     if: |
+       always() && 
        (needs.check-changes-layer.result == 'success' || needs.check-changes-layer.result == 'skipped') 
     outputs:
         file_changes: ${{ steps.changed-files-dir-names.outputs.all_changed_files }}
@@ -50,13 +52,17 @@ jobs:
           json: true
           base_sha: ${{ github.base_ref }}
           json_raw_format: true
-          files_ignore: .github
+          files_ignore: |
+                .github
+                layer*
       - name: List all changed files
         run: echo ${{ steps.changed-files-dir-names.outputs.all_changed_files }}  
   create-file:
     name: Create file
     runs-on: ubuntu-latest
     needs: activate-workflow-lambda
+    if: |
+       always() 
     steps:
        - uses: actions/checkout@v3
        - run: |
