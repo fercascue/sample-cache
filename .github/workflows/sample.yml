@@ -71,14 +71,8 @@ jobs:
            echo "deploy_flow=none" >> $GITHUB_OUTPUT 
           fi
         shell: bash 
-  validate-flow:
-    name: Validate flow
-    needs: check-all-changes
-    runs-on: ubuntu-latest
-    steps:
-      - run: echo ${{ needs.check-all-changes.outputs.deploy_flow}}
   run-layer-flow:
-    name: Run layer flow
+    name: Changes on layers - Deploy layer flow
     needs: [check-all-changes, activate-workflow-layer]
     if: ${{ needs.check-all-changes.outputs.deploy_flow == 'layer' }}
     strategy:
@@ -88,7 +82,7 @@ jobs:
     with:
       resource: ${{ (matrix.version) }}
   run-lambda-flow:
-    name: Run lambda flow
+    name: Changes on lambdas - Deploy lambda flow
     needs: [check-all-changes, activate-workflow-lambda]
     runs-on: ubuntu-latest
     if: ${{ needs.check-all-changes.outputs.deploy_flow == 'lambda' }}
@@ -115,9 +109,50 @@ jobs:
     uses: ./.github/workflows/reusable-workflow.yml
     with:
       resource: ${{ (matrix.version) }}
+  
+  run-complete-flow-layer:
+    name: Complete Workflow for layer
+    needs: [check-all-changes, activate-workflow-layer]
+    if: ${{ needs.check-all-changes.outputs.deploy_flow == 'all' }}
+    strategy:
+      matrix:
+       version: ${{ fromJSON(needs.activate-workflow-layer.outputs.layer_changes) }}
+    uses: ./.github/workflows/reusable-workflow.yml
+    with:
+      resource: ${{ (matrix.version) }}
+  
+  run-complete-flow-lambda:
+    name: Complete Workflow for lambda  
+    needs: [run-complete-flow-layer, activate-workflow-lambda]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - run: |
+            mkdir /tmp/files
+            cd /tmp/files
+            curl https://examples.onelinerhub.com/file.zip -o tmp.zip && unzip tmp.zip && rm tmp.zip 
+            ls -la
+      - name: Cache Primes
+        id: restore-build
+        uses: actions/cache@v3
+        with:
+         path: /tmp/files
+         key: layer-cache    
+      - run: echo ${{ github.ref_name}}
+  run-coplete-workflow-lambda-deploy:
+    name: call workflow for lambda
+    needs: [run-complete-flow-lambda, activate-workflow-lambda]
+    strategy:
+      matrix:
+        version: ${{ fromJSON(needs.activate-workflow-lambda.outputs.lambda_changes) }}
+    uses: ./.github/workflows/reusable-workflow.yml
+    with:
+      resource: ${{ (matrix.version) }}
+
   cleanup:
     runs-on: ubuntu-latest
-    needs: call-workflow
+    needs: [call-workflow, run-complete-flow-lambda]
+    if: always()
     steps:
         - name: Check out code
           uses: actions/checkout@v3
@@ -127,6 +162,21 @@ jobs:
               gh extension install actions/gh-actions-cache
               
               REPO=${{ github.repository }}
-              BRANCH="${{ github.ref_name }}"         
+              BRANCH="${{ github.ref_name }}"
+    
+              echo "Fetching list of cache key"
+              cacheKeysForPR=$(gh actions-cache list -R $REPO -B $BRANCH | cut -f 1 )
+    
+              ## Setting this to not fail the workflow while deleting cache keys. 
+              set +e
+              echo "Deleting caches..."
+              for cacheKey in $cacheKeysForPR
+              do
+                  gh actions-cache delete $cacheKey -R $REPO -B $BRANCH --confirm
+              done
+              echo "Done"
+          env:
+            GH_TOKEN: ${{ secrets.PAT }}           
+  
 
      
