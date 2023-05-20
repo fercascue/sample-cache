@@ -179,7 +179,7 @@ jobs:
             GH_TOKEN: ${{ secrets.PAT }}           
   summary:
     name: Job Summary
-    runs-on: ubunt-latest
+    runs-on: ubuntu-latest
     needs: cleanup
     if: always()
     steps:
