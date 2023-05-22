@@ -46,19 +46,16 @@ jobs:
         run: |
           echo '### Deployment complete! :rocket: ' >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY # this is a blank line
-          cacheKeysForPR=${{ fromJSON(needs.activate-workflow-layer.outputs.layer_changes) }}
 
-          echo "Listing values...${#cacheKeysForPR[@]}"
-          for i in "${cacheKeysForPR[@]}"
+          declare -a arr=${{ fromJSON(needs.activate-workflow-layer.outputs.layer_changes) }}
+          ## now loop through the above array
+          for i in "${arr[@]}"
           do
             echo "$i"
+            # or do whatever with individual element of the array
           done
-          
-          for cacheKey in $cacheKeysForPR
-          do
-           echo "- Number of layer deployed $cacheKeysForPR " >> $GITHUB_STEP_SUMMARY
-          done
-          echo "Done"
+
+         
 
           echo "- Pushed by: @${{ github.actor }}, Action: ${{ github.event_name }}" >> $GITHUB_STEP_SUMMARY  
 
