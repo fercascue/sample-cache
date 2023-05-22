@@ -47,7 +47,7 @@ jobs:
           echo '### Deployment complete! :rocket: ' >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY # this is a blank line
 
-          declare -a arr=${{ fromJSON(needs.activate-workflow-layer.outputs.layer_changes) }}
+          declare -a arr=${{ needs.activate-workflow-layer.outputs.layer_changes }}
           ## now loop through the above array
           for i in "${arr[@]}"
           do
