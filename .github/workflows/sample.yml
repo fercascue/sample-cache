@@ -36,7 +36,7 @@ jobs:
            echo "LAYER_GLOBAL=$i" >> $GITHUB_ENV
            echo ${{ steps.changed-files-dir-names.outputs.all_changed_files }}
       - name: Update value
-        run: echo "LAYER_GLOBAL=2" >> $GITHUB_ENV     
+        run: echo "LAYER_GLOBAL=2" >> ${{env.LAYER_GLOBAL}}   
             
   summary:
     name: Job Summary
