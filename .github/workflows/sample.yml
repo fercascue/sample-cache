@@ -35,6 +35,8 @@ jobs:
            echo "LAYER_COUNT=$i" >> $GITHUB_OUTPUT
            echo "LAYER_GLOBAL=$i" >> $GITHUB_ENV
            echo ${{ steps.changed-files-dir-names.outputs.all_changed_files }}
+      - name: Update value
+        run: echo "LAYER_GLOBAL=2" >> $GITHUB_ENV     
             
   summary:
     name: Job Summary
@@ -42,6 +44,8 @@ jobs:
     needs: [activate-workflow-layer]
     if: always()
     steps:
+      - name: Print value
+        run: echo ${{env.LAYER_GLOBAL}}
       - name: Generate list using Markdown
         run: |
           cacheKeysForPR=${{ needs.activate-workflow-layer.outputs.layer_changes }}
