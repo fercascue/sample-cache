@@ -197,6 +197,15 @@ jobs:
     steps:
       - name: Generate list using Markdown
         run: |
+          cacheKeysForPR=${{ fromJSON(needs.activate-workflow-layer.outputs.layer_changes) }}
+
+          echo "Listing values..."
+          for cacheKey in $cacheKeysForPR
+          do
+              echo $cacheKey
+          done
+          echo "Done"
+
           echo '### Deployment complete! :rocket: ' >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY # this is a blank line
           echo "- Number of layer deployed ${{ fromJSON(needs.activate-workflow-layer.outputs.layer_changes) }}" >> $GITHUB_STEP_SUMMARY
