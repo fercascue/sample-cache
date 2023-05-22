@@ -58,7 +58,7 @@ jobs:
            
           done
           echo "Done"
-
-          echo "- Pushed by: @${{ github.actor }}, Action: ${{ github.event_name }}" >> $GITHUB_STEP_SUMMARY  
+          echo "" >> $GITHUB_STEP_SUMMARY # this is a blank line
+          echo "Pushed by: @${{ github.actor }}, Action: ${{ github.event_name }}" >> $GITHUB_STEP_SUMMARY  
 
      
