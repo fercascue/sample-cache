@@ -49,8 +49,8 @@ jobs:
           
           echo '### Deployment complete! :rocket: ' >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY # this is a blank line
-          echo "- Number of items deployed ${#array[@]} " >> $GITHUB_STEP_SUMMARY
-          echo "- Items deployed:" >> $GITHUB_STEP_SUMMARY
+          echo "## Number of items deployed ${#array[@]} " >> $GITHUB_STEP_SUMMARY
+          echo "## Items deployed:" >> $GITHUB_STEP_SUMMARY
           
           for i in "${array[@]}"
           do
