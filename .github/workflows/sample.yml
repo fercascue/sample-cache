@@ -44,18 +44,17 @@ jobs:
     steps:
       - name: Generate list using Markdown
         run: |
+          cacheKeysForPR=${{ needs.activate-workflow-layer.outputs.layer_changes }}
           echo '### Deployment complete! :rocket: ' >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY # this is a blank line
-
-          declare -a arr=${{ needs.activate-workflow-layer.outputs.layer_changes }}
-          ## now loop through the above array
-          for i in "${arr[@]}"
+          echo "- Number of items deployed ${#cacheKeysForPR[@]} " >> $GITHUB_STEP_SUMMARY
+        
+          for i in "${cacheKeysForPR[@]}"
           do
+          echo "- Item deployed $i " >> $GITHUB_STEP_SUMMARY
             echo "$i"
-            # or do whatever with individual element of the array
           done
-
-         
+          echo "Done"
 
           echo "- Pushed by: @${{ github.actor }}, Action: ${{ github.event_name }}" >> $GITHUB_STEP_SUMMARY  
 
