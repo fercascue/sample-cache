@@ -51,7 +51,7 @@ jobs:
           echo "" >> $GITHUB_STEP_SUMMARY # this is a blank line
           echo "- Number of items deployed ${#cacheKeysForPR[@]} " >> $GITHUB_STEP_SUMMARY
         
-          for i in "${cacheKeysForPR[@]}"
+          for i in "${array[@]}"
           do
             echo "- Item deployed $i " >> $GITHUB_STEP_SUMMARY
             echo "$i"
