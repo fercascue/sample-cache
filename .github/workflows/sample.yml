@@ -23,7 +23,7 @@ jobs:
           base_sha: ${{ github.base_ref }}
           json_raw_format: true
           files_ignore: .github
-          files: layer*         
+        
       - name: List all changed files
         id: layer-count
         run: |
