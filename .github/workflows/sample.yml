@@ -53,7 +53,7 @@ jobs:
         
           for i in "${array[@]}"
           do
-            echo "- Item deployed $i" | sed 's/[//g' >> $GITHUB_STEP_SUMMARY
+            echo "- Item deployed $i" | tr -d '[]' >> $GITHUB_STEP_SUMMARY
             echo "$i"
           done
           echo "Done"
