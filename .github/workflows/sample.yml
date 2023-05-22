@@ -49,7 +49,8 @@ jobs:
           cacheKeysForPR=${{ fromJSON(needs.activate-workflow-layer.outputs.layer_changes) }}
 
           echo "Listing values...${#cacheKeysForPR[@]}"
-          echo "Items: ${cacheKeysForPR[*]}"
+         
+          echo ${cacheKeysForPR[0]}
           for cacheKey in $cacheKeysForPR
           do
            echo "- Number of layer deployed $cacheKeysForPR " >> $GITHUB_STEP_SUMMARY
