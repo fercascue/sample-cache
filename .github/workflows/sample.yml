@@ -37,11 +37,21 @@ jobs:
            echo ${{ steps.changed-files-dir-names.outputs.all_changed_files }}
       - name: Update value
         run: echo 2 >> ${{env.LAYER_GLOBAL}}   
-            
+  
+  check-changes-layer:
+    name: check changes in specific folder
+    needs: activate-workflow-layer
+    if: ${{ needs.activate-workflow-layer.outputs.layer_changes != '[]' }}
+    strategy:
+      matrix:
+        version: ${{ fromJSON(needs.activate-workflow-layer.outputs.layer_changes) }}
+    uses: ./.github/workflows/reusable-workflow.yml
+    with:
+      resource: ${{ (matrix.version) }}  
   summary:
     name: Job Summary
     runs-on: ubuntu-latest
-    needs: [activate-workflow-layer]
+    needs: [activate-workflow-layer, check-changes-layer]
     if: always()
     steps:
       - name: Print value

@@ -8,52 +8,25 @@ on:
         type: string
 
 jobs:
-  deploy-layer:
-    name: Deploy layer using cache
+  build:
+    name: Build Graalvm
     runs-on: ubuntu-latest
-    if: ${{ contains(inputs.resource, 'layer') }}
     defaults:
       run:
         shell: bash
-        working-directory: ${{ inputs.resource }} 
-    steps:
-     - uses: actions/checkout@v3 
-     - run: echo deploy layer to AWS
-  deploy-lambda:
-    name: Deploy lambda using cache
-    runs-on: ubuntu-latest
-    if: ${{ contains(inputs.resource, 'layer') == false }}
-    defaults:
-      run:
-        shell: bash
-        working-directory: ${{ inputs.resource }} 
+        working-directory: ${{ inputs.resource }}
     steps:
       - uses: actions/checkout@v3
-      - name: Set up Java for get Repository
-        uses: actions/setup-java@v3
+      - uses: graalvm/setup-graalvm@v1
         with:
-         java-version: '11'
-         distribution: 'temurin'
-
-      - name: Build with Maven
-        run: mvn -B package --file pom.xml 
-       
-      - uses: actions/cache/restore@v3
-        id: restore-build
-        with:
-          path: /tmp/files
-          key: layer-cache
-      - run: ls -la
-      - run: |
-          mkdir -p ./opt
-          cd ./opt
-          mkdir lib
-          cd ..
-          ls -la /tmp/files
-          cp /tmp/files/*.* ./opt/lib/
-      - run: ls -la ./opt/lib/
-      - name: 🖥️  Building docker image
-        run: |             
-          docker build -t sample:latest .
-          echo "Build docker image part finished successfully 👍 "
-    
+          java-version: '17.0.7'
+          distribution: 'graalvm' # See 'Options' for all available distributions
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Example step
+        run: |
+          echo "GRAALVM_HOME: $GRAALVM_HOME"
+          echo "JAVA_HOME: $JAVA_HOME"
+          java --version
+          native-image --version
+      - name: Example step using Maven plugin  # https://graalvm.github.io/native-build-tools/latest/maven-plugin.html
+        run: mvn -Pnative package
